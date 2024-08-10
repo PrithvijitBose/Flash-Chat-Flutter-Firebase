@@ -1,0 +1,50 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+    id "com.google.gms.google-services"
+}
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localProperties.load(new FileInputStream(localPropertiesFile))
+}
+
+android {
+    namespace = "com.example.flash_card"
+    compileSdk = 34 // Update as needed
+    ndkVersion = flutter.ndkVersion // Ensure this is defined correctly
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        applicationId = "com.example.flash_card"
+        minSdk = 23
+        targetSdk = 34 // Update as needed
+        versionCode = localProperties.getProperty("flutter.versionCode", "1").toInteger()
+        versionName = localProperties.getProperty("flutter.versionName", "1.0")
+    }
+
+    buildTypes {
+        release {
+            signingConfig = signingConfigs.debug // Update as needed
+        }
+    }
+}
+
+flutter {
+    source = "../.."
+}
+
+dependencies {
+    implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
+    implementation("com.google.firebase:firebase-analytics")
+    // Add other Firebase dependencies if needed
+}
+
+// Apply the Google services plugin
+apply plugin: 'com.google.gms.google-services'
